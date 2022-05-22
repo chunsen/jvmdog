@@ -1,0 +1,18 @@
+target/*
+target
+.idea/*
+.idea
+*.iml
+logs/*
+logs
+
+# eclipse
+.settings/
+*.classpath
+.project
+
+*.class
+*.jar
+
+# testng
+*/test-output/
