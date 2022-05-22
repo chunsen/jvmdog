@@ -29,3 +29,6 @@
 - 监控新对象：监控方法执行过程中新产生的对象；
 - 堆栈信息：查询存在类pattern的线程栈；
 - 运行代码：在目标进程中运行指定的代码；
+
+### 测试应用
+可以使用jvmdog-example作为目标应用进行测试：https://github.com/chunsen/jvmdog-example   
