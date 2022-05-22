@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false"
+    scanPeriod="30 seconds">
+
+    <property name="server.name" value="jvmdog-server" />
+    <property name="log.level" value="INFO" />
+    <property name="file.level" value="INFO" />
+    <property name="stdout.level" value="INFO" />
+    <property name="access.level" value="INFO" />
+    <property name="logPattern"
+        value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - [%X{sessionId}] %msg%n" />
+    <property name="maxSize" value="100MB" />
+    <property name="logFolder" value="logs" />
+    <property name="accesslogFolder" value="logs" />
+    <property name="encoding" value="UTF-8" />
+    <property name="queueSize" value="1024" />
+
+    <appender name="stdout"
+        class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${logPattern}</pattern>
+            <charset>${encoding}</charset>
+        </encoder>
+        <filter
+            class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${stdout.level}</level>
+        </filter>
+    </appender>
+
+    <appender name="file-appdender"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${logPattern}</pattern>
+            <charset>${encoding}</charset>
+        </encoder>
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logFolder}/${server.name}_%d{yyyy-MM-dd}.%i.info.log
+            </fileNamePattern>
+            <maxFileSize>${maxSize}</maxFileSize>
+        </rollingPolicy>
+        <filter
+            class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${file.level}</level>
+        </filter>
+        <filter
+            class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator
+                class="jvmdog.server.log.MyMDCEvaluator">
+                <mdcName>remoteId</mdcName>
+            </evaluator>
+            <OnMatch>DENY</OnMatch>
+            <OnMismatch>ACCEPT</OnMismatch>
+        </filter>
+    </appender>
+
+    <appender name="agent-appender"
+        class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator
+            class="ch.qos.logback.classic.sift.MDCBasedDiscriminator">
+            <key>remoteId</key>
+            <defaultValue>server</defaultValue>
+        </discriminator>
+        <sift>
+            <appender
+                class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <encoder>
+                    <pattern>%msg</pattern>
+                    <charset>${encoding}</charset>
+                </encoder>
+                <rollingPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                    <fileNamePattern>${logFolder}/${remoteId}_%d{yyyy-MM-dd}.%i.log
+                    </fileNamePattern>
+                    <maxFileSize>${maxSize}</maxFileSize>
+                </rollingPolicy>
+                <filter
+                    class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>${file.level}</level>
+                </filter>
+                <filter
+                    class="ch.qos.logback.core.filter.EvaluatorFilter">
+                    <evaluator
+                        class="jvmdog.server.log.MyMDCEvaluator">
+                        <mdcName>remoteId</mdcName>
+                    </evaluator>
+                    <OnMatch>ACCEPT </OnMatch>
+                    <OnMismatch>DENY</OnMismatch>
+                </filter>
+            </appender>
+        </sift>
+    </appender>
+
+
+    <!-- 异步输出 -->
+    <appender name="ASYNC-FILE"
+        class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>${queueSize}</queueSize>
+
+        <includeCallerData>true</includeCallerData>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="file-appdender" />
+    </appender>
+
+    <!-- rootLoggerLevel尽量保持info level, 类似于spring会产生大量的debug文件容易占用过多磁盘 -->
+    <root level="${log.level}">
+        <appender-ref ref="ASYNC-FILE" />
+        <appender-ref ref="stdout" />
+    </root>
+
+    <logger name="jvmdog.clientLogger" level="INFO">
+        <appender-ref ref="agent-appender" />
+    </logger>
+
+</configuration>

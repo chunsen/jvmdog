@@ -1,0 +1,11 @@
+jvmdog.core.command.bytecode.ByteCodeAgentCommand
+jvmdog.core.command.code.CodeAgentCommand
+jvmdog.core.command.dump.DumpAgentCommand
+jvmdog.core.command.instance.InstanceCommand
+jvmdog.core.command.objectmonitor.ObjectMonitorAgentCommand
+jvmdog.core.command.objectquery.ObjectQueryCommand
+jvmdog.core.command.objectupdate.ObjectUpdateCommand
+jvmdog.core.command.reset.ResetAgentCommand
+jvmdog.core.command.run.RunCommand
+jvmdog.core.command.searchclass.SearchClassCommand
+jvmdog.core.command.stack.StackCommand

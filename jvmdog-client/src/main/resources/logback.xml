@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration debug="true">
+
+    <contextName>jvmdog-client-log</contextName>
+    <property name="log.level" value="INFO" />
+    <property name="file.level" value="INFO" />
+    <property name="logPattern"
+        value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - [%X{sessionId}] %msg%n" />
+    <property name="maxSize" value="100MB" />
+    <property name="logFolder" value="logs" />
+    <property name="accesslogFolder" value="logs" />
+    <property name="encoding" value="UTF-8" />
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${logPattern}</pattern>
+            <charset>${encoding}</charset>
+        </encoder>
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logFolder}/jvmdog-client-log_%d{yyyy-MM-dd}.%i.info.log
+            </fileNamePattern>
+            <maxFileSize>${maxSize}</maxFileSize>
+        </rollingPolicy>
+        <filter
+            class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${file.level}</level>
+        </filter>
+    </appender>
+
+    <!--======================================ConsoleAppender=================================================================== -->
+    <!--日志输出组件，主要负责日志的输出以及格式化日志。 stdout:标准输出 -->
+    <appender name="stdout"
+        class="ch.qos.logback.core.ConsoleAppender">
+        <filter
+            class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level
+                %logger{36} [%file : %line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--root是默认的logger 这里没设定输出级别 -->
+    <root>
+        <!--定义了appender，日志会通过往appender里面写 -->
+        <appender-ref ref="stdout" />
+        <appender-ref ref="file" />
+    </root>
+
+</configuration>
