@@ -6,6 +6,9 @@ target
 logs/*
 logs
 
+jvmdog-server/src/main/resources/static/*
+
+
 # eclipse
 .settings/
 *.classpath

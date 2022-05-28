@@ -16,19 +16,19 @@ public class ClientJarService {
     @Value("${jvmdog.jar.agent:jvmdog-agent-jar-with-dependencies.jar}")
     private String agentJar;
 
-    @Value("${jvmdog.jar.core:jvmdog-core-0.0.1-SNAPSHOT-all.jar}")
+    @Value("${jvmdog.jar.core:jvmdog-core-all.jar}")
     private String coreJar;
     
     @Value("${jvmdog.native-agent.name:test}")
     private String nativeAgent;
     
-    @Value("${jvmdog.native-agent.folder:D:\\my-code\\jvm-dog\\jvmti\\}")
+    @Value("${jvmdog.native-agent.folder:lib}")
     private String nativeAgentFolder;
 
-    @Value("${jvmdog.jar.folder:D:\\my-code\\jvm-dog\\jvmdog-core\\target\\}")
+    @Value("${jvmdog.jar.folder:lib}")
     private String jarFolder;
     
-    @Value("${jvmdog.jar.agent.folder:D:\\my-code\\jvm-dog\\jvmdog-agent\\target\\}")
+    @Value("${jvmdog.jar.agent.folder:lib}")
     private String agentJarFolder;
 
     private Path agentJarPath() {

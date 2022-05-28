@@ -46,7 +46,7 @@ public class DumpAgentCommand implements AgentCommand{
             Map<String, byte[]> byteCodeMap = new HashMap<>();
             for(Entry<Class<?>, byte[]> entry: transformer.getByteCodeMap().entrySet()){
                 byteCodeMap.put(entry.getKey().getName(), entry.getValue());
-                dumpClass(entry.getKey(), entry.getValue());
+//                dumpClass(entry.getKey(), entry.getValue());
             }
             
             dumpMessage.setByteCodeMap(byteCodeMap);
@@ -63,23 +63,23 @@ public class DumpAgentCommand implements AgentCommand{
         return message;
     }
     
-    private void dumpClass(Class<?> clazz, byte[] data){
-        String folderPath = "d:\\temp\\dump\\";
-        File folder = new File(folderPath);
-        if(!folder.exists()){
-            folder.mkdirs();
-        }
-        File dumpClassFile = new File(folder, clazz.getName()+".class");
-        System.out.println("dump class file:" + dumpClassFile.getAbsolutePath());
-
-        // 将类字节码写入文件
-        try {
-            ByteArrayInputStream sr = new ByteArrayInputStream(data);
-            Files.copy(sr, dumpClassFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void dumpClass(Class<?> clazz, byte[] data){
+//        String folderPath = "d:\\temp\\dump\\";
+//        File folder = new File(folderPath);
+//        if(!folder.exists()){
+//            folder.mkdirs();
+//        }
+//        File dumpClassFile = new File(folder, clazz.getName()+".class");
+//        System.out.println("dump class file:" + dumpClassFile.getAbsolutePath());
+//
+//        // 将类字节码写入文件
+//        try {
+//            ByteArrayInputStream sr = new ByteArrayInputStream(data);
+//            Files.copy(sr, dumpClassFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public String name() {

@@ -1,1 +1,5 @@
+Linux:
 java -Xbootclasspath/a:$JAVA_HOME/lib/tools.jar -jar jvmdog-client-0.0.1-SNAPSHOT-all.jar 
+
+Windows:
+java -Xbootclasspath/a:"%JAVA_HOME%/lib/tools.jar" -jar jvmdog-client-0.0.1-SNAPSHOT-all.jar 

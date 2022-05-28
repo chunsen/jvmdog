@@ -5,7 +5,7 @@
     <parent>
         <groupId>chunsen.jvmdog</groupId>
         <artifactId>jvmdog-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
     </parent>
     <artifactId>jvmdog-client-core</artifactId>
 

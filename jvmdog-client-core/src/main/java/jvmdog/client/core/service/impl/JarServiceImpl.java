@@ -25,7 +25,7 @@ public class JarServiceImpl implements JarService{
     @Value("${jvmdog.jar.agent:jvmdog-agent-jar-with-dependencies.jar}")
     private String agentJar;
     
-    @Value("${jvmdog.jar.core:jvmdog-core-0.0.1-SNAPSHOT-all.jar}")
+    @Value("${jvmdog.jar.core:jvmdog-core-all.jar}")
     private String coreJar;
     
     @Value("${jvmdog.nativa-agent:test}")
